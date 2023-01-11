@@ -19,5 +19,4 @@ public class HomeRestController {
     public String homeWithParam(@RequestParam(value = "name", defaultValue = "world!" ) String name) {
         return "Hello, " + name +" !";
     }
-
 }
