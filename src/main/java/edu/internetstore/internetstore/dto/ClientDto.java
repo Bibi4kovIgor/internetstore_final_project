@@ -1,4 +1,4 @@
-package edu.internetstore.internetstore.entity;
+package edu.internetstore.internetstore.dto;
 
 
 import lombok.Builder;
@@ -6,15 +6,19 @@ import lombok.Data;
 import lombok.NonNull;
 
 import java.time.LocalDateTime;
-import java.util.Base64;
+import java.util.UUID;
 
 @Data
 @Builder
-public class Client {
-    @NonNull private long id;
+public class ClientDto {
+    @NonNull private String id;
+
     @NonNull private String name;
+
     private LocalDateTime birthDate;
+
     @NonNull private String email;
-    @NonNull private Base64 password;
+
+//    @NonNull private Base64 password;
 
 }

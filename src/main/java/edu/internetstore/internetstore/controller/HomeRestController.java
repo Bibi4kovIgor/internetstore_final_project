@@ -10,7 +10,7 @@ import java.util.Objects;
 @RestController
 public class HomeRestController {
 
-    @GetMapping(value = {"/", "/{name}"})
+    @GetMapping(value = {"/", "/hello/{name}"})
     public String home(@PathVariable(value = "name", required = false) String name) { // /name
         return Objects.isNull(name) ? "Hello, world!" : "Hello, " + name +" !";
     }

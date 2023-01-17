@@ -6,11 +6,11 @@
         <div id="content">
             <table class="datatable">
                 <tr>
-                    <th>id</th> <th>name</th> <th>price</th>
+                    <th>name</th> <th>price</th>
                 </tr>
                 <#list model["products"] as product>
                     <tr>
-                        <td>${product.id}</td><td>${product.name}</td> <td>${product.price}</td>
+                       <td>${product.name}</td> <td>${product.price}</td>
                     </tr>
                 </#list>
             </table>
@@ -18,7 +18,6 @@
                 <fieldset>
                     <legend>Add Product</legend>
                     <form name="InsertProduct" action="/insert-product" method="post">
-                        Product id : <input type="text" name="id" />	<br/>
                         Product name : <input type="text" name="name" />	<br/>
                         Product price : <input type="text" name="price" />	<br/>
                         <input type="submit" value="   Save   " />
