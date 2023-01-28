@@ -4,18 +4,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 
-import java.util.UUID;
-
 @Data
 @Builder
-public class SupplierDto {
+public class CategoriesDto {
 
     @NonNull private String id;
 
     @NonNull private String name;
-
-    @NonNull private String email;
-
-//    @Column(name = "product")
-//    @NonNull private List<Product> product;
 }

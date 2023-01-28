@@ -1,13 +1,12 @@
 package edu.internetstore.internetstore.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -15,7 +14,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-public class ProductEntity {
+@Table(name = "products")
+public class ProductsEntity { // product_entity
     @Id
     @GeneratedValue
     @UuidGenerator
@@ -24,15 +24,25 @@ public class ProductEntity {
     @Column(name = "name")
     @NonNull private String name;
 
+    @Column(name = "vendor_code")
+    @NonNull private String vendorCode;
+
     @Column(name = "description")
     private String description;
 
     @Column(name = "availability")
     private boolean available;
 
-//    @Column(name = "category")
-//    private Category category;
-
     @Column(name = "price")
     @NonNull private BigDecimal price;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+                cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+                mappedBy = "products")
+    private Set<CategoriesEntity> categories = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "supplier_id")
+    private SuppliersEntity supplier;
+
 }

@@ -5,20 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @Builder
-public class ClientDto {
+public class ClientsDto {
     @NonNull private String id;
 
     @NonNull private String name;
 
-    private LocalDateTime birthDate;
+    private Instant birthDate;
 
     @NonNull private String email;
 
-//    @NonNull private Base64 password;
+    @NonNull private String password;
 
 }

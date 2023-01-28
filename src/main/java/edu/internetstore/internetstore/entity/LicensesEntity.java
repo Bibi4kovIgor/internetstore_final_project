@@ -2,24 +2,24 @@ package edu.internetstore.internetstore.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
-
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-public class CategoryEntity {
+@Table(name = "licenses")
+public class LicensesEntity {
+
     @Id
-    @GeneratedValue
-    @UuidGenerator
-    private UUID id;
+    @Column(name = "tax_registry")
+    @NonNull private String taxRegistry;
 
     @Column(name = "name")
     @NonNull private String name;
+
+
 }

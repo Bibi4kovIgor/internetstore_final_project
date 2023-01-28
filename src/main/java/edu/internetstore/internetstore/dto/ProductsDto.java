@@ -5,22 +5,25 @@ import lombok.Data;
 import lombok.NonNull;
 
 import java.math.BigDecimal;
-import java.util.UUID;
+import java.util.Set;
 
 @Data
 @Builder
-public class ProductDto {
+public class ProductsDto {
 
     private String id;
 
     @NonNull private String name;
 
+    @NonNull private String vendorCode;
+
     private String description;
 
     private boolean available;
 
-//    @Column(name = "category")
-//    private Category category;
-
     @NonNull private BigDecimal price;
+
+    @NonNull private Set<CategoriesDto> categories;
+
+    @NonNull private SuppliersDto supplier;
 }

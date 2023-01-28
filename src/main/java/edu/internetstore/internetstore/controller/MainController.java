@@ -1,9 +1,9 @@
 package edu.internetstore.internetstore.controller;
 
-import edu.internetstore.internetstore.dto.ProductDto;
-import edu.internetstore.internetstore.service.ClientService;
-import edu.internetstore.internetstore.service.ProductService;
-import edu.internetstore.internetstore.service.SupplierService;
+import edu.internetstore.internetstore.dto.ChecksDto;
+import edu.internetstore.internetstore.dto.OrdersDto;
+import edu.internetstore.internetstore.dto.ProductsDto;
+import edu.internetstore.internetstore.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,18 +14,34 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class MainController {
 
-    private final ClientService clientService;
-    private final ProductService productService;
-    private final SupplierService supplierService;
+    private final ClientsService clientsService;
+    private final ProductsService productsService;
+    private final SuppliersService suppliersService;
 
-    public MainController(ClientService clientService, ProductService productService, SupplierService supplierService) {
-        this.clientService = clientService;
-        this.productService = productService;
-        this.supplierService = supplierService;
+    private final CategoriesService categoriesService;
+
+    private final OrdersService ordersService;
+
+    private final ChecksService checksService;
+
+
+    public MainController(ClientsService clientsService,
+                          ProductsService productsService,
+                          SuppliersService suppliersService,
+                          CategoriesService categoriesService,
+                          OrdersService ordersService,
+                          ChecksService checksService) {
+        this.clientsService = clientsService;
+        this.productsService = productsService;
+        this.suppliersService = suppliersService;
+        this.categoriesService = categoriesService;
+        this.ordersService = ordersService;
+        this.checksService = checksService;
     }
 
     @GetMapping("/index")
@@ -47,25 +63,43 @@ public class MainController {
 
     @GetMapping("/products")
     public String getAllProducts(@ModelAttribute("model") ModelMap model) {
-        List<ProductDto> products = productService.getAllData();
+        List<ProductsDto> products = productsService.getAllData();
         model.addAttribute("products", products);
         return "products";
     }
 
+    @GetMapping("/orders")
+    public String getAllOrders(@ModelAttribute("model") ModelMap model) {
+        List<OrdersDto> orders = ordersService.getAllData();
+        model.addAttribute("orders", orders);
+        return "orders";
+    }
 
+    @GetMapping("/checks")
+    public String getAllChecks(@ModelAttribute("model") ModelMap model) {
+        List<ChecksDto> checks = checksService.getAllData();
+        model.addAttribute("checks", checks);
+        return "checks";
+    }
 
     @PostMapping("/insert-product")
     public ModelAndView insertNewProduct(
             @ModelAttribute("model") ModelMap model,
             @RequestParam(name = "name") String name,
-            @RequestParam(name = "price") String price) {
+            @RequestParam(name = "price") String price,
+            @RequestParam(name = "vendor_code") String vendorCode,
+            @RequestParam(name = "category_id") String categoryId,
+            @RequestParam(name = "supplier_id") String supplierId) {
 
-        ProductDto product  = ProductDto.builder()
+        ProductsDto product  = ProductsDto.builder()
                 .name(name)
                 .price(new BigDecimal(price))
+                .vendorCode(vendorCode)
+                .categories(Set.of(categoriesService.getDataById(categoryId)))
+                .supplier(suppliersService.getDataById(supplierId))
                 .build();
-        productService.insertData(product);
-            model.addAttribute("products", productService.getAllData());
+        productsService.insertData(product);
+            model.addAttribute("products", productsService.getAllData());
         return new ModelAndView("/products", model);
     }
 }
