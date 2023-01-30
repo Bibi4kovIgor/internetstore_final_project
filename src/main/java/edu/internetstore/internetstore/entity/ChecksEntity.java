@@ -18,12 +18,8 @@ public class ChecksEntity {
     @UuidGenerator
     private UUID id;
 
-//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JoinColumn(name = "vendor_code", referencedColumnName = "vendor_code")
-//    @NonNull private ProductsEntity product;
-
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "vendor_code", referencedColumnName = "vendor_code")
     @NonNull private ProductsEntity product;
 
     @Column(name = "quantity")

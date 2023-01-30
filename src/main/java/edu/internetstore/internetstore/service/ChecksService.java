@@ -1,7 +1,6 @@
 package edu.internetstore.internetstore.service;
 
 import edu.internetstore.internetstore.dto.ChecksDto;
-import edu.internetstore.internetstore.entity.ChecksEntity;
 import edu.internetstore.internetstore.repository.ChecksRepository;
 import edu.internetstore.internetstore.util.EntityToDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +17,12 @@ public class ChecksService implements InternetStoreService<ChecksDto> {
 
     @Override
     public List<ChecksDto> getAllData() {
-        List<ChecksEntity> checks = checksRepository.findAll();
-        List<ChecksDto> checksDto = checks.stream()
+        return checksRepository.findAll().stream()
                 .map(EntityToDto::checksEntityToDto)
-//                .map(check -> check.setCheckSum(
-//                        new BigDecimal(check.getQuantity()).multiply(check.getProduct().getPrice())))
+                .peek(check -> check.setCheckSum(
+                        check.getProduct().getPrice()
+                                .multiply(new BigDecimal(check.getQuantity()))))
                 .toList();
-        // TODO: Add total sum calculations
-
-        return checksDto;
     }
 
 

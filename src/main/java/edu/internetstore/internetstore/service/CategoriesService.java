@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CategoriesService implements InternetStoreService<CategoriesDto> {
@@ -17,7 +18,9 @@ public class CategoriesService implements InternetStoreService<CategoriesDto> {
 
     @Override
     public List<CategoriesDto> getAllData() {
-        return null;
+        return categoriesRepository.findAll().stream()
+                .map(EntityToDto::categoryEntityToDto)
+                .toList();
     }
 
     @Override
@@ -38,7 +41,7 @@ public class CategoriesService implements InternetStoreService<CategoriesDto> {
     @Override
     public CategoriesDto getDataById(String id) {
         return EntityToDto.categoryEntityToDto(
-                categoriesRepository.findById(id)
+                categoriesRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new EntityNotFoundException("No category was found")));
     }
 

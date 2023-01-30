@@ -10,5 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface SuppliersRepository extends JpaRepository<SuppliersEntity, UUID> {
-    Optional<CategoriesEntity> findById(String id);
+    Optional<SuppliersEntity> findById(String id);
 }

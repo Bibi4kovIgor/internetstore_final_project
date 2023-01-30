@@ -41,41 +41,36 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 
 
 -- products
-insert into products(vendor_code, name, description, availability, price, category_id, supplier_id) values
+insert into products(vendor_code, name, description, availability, price, supplier_id) values
 ('V157898556', 'Laptop', 'Some powerful laptop', true, 15547.15,
-(SELECT * FROM get_id_from_table(0, 'categories')), (SELECT * FROM get_id_from_table(0, 'suppliers'))),
+(SELECT * FROM get_id_from_table(0, 'suppliers'))),
 ('R178885426', 'Personal Computer', 'Some powerful PC', true, 10854.15,
-(SELECT * FROM get_id_from_table(1, 'categories')), (SELECT * FROM get_id_from_table(1, 'suppliers')));
+(SELECT * FROM get_id_from_table(1, 'suppliers')));
 
-insert into products(vendor_code, name, description, availability, price, category_id, supplier_id) values
+insert into products(vendor_code, name, description, availability, price, supplier_id) values
 ('SP58898556', 'Hoover', 'Some good hoover', true, 6547.0,
-(SELECT get_id_from_table(1, 'categories')), (SELECT get_id_from_table(2, 'suppliers'))),
+(SELECT get_id_from_table(2, 'suppliers'))),
 ('RR78954726', 'Fridge', 'Some cheap fridge', true, 12854.55,
-(SELECT get_id_from_table(1, 'categories')), (SELECT get_id_from_table(2, 'suppliers')));
+(SELECT get_id_from_table(2, 'suppliers')));
 
-insert into products(vendor_code, name, description, availability, price, category_id, supplier_id) values
+insert into products(vendor_code, name, description, availability, price, supplier_id) values
 ('TT85471169', 'Juice', 'Orange juice', true, 50.5,
-(SELECT get_id_from_table(2, 'categories')), (SELECT get_id_from_table(3, 'suppliers'))),
+(SELECT get_id_from_table(3, 'suppliers'))),
 ('BB98456638', 'Bread', 'wheat bread', true, 25.7,
-(SELECT get_id_from_table(2, 'categories')), (SELECT get_id_from_table(3, 'suppliers')));
+(SELECT get_id_from_table(3, 'suppliers')));
 
 -- checks
-insert into checks(product_id, quantity) values
-((SELECT get_id_from_table(0, 'products')), 3),
-((SELECT get_id_from_table(1, 'products')), 4),
-((SELECT get_id_from_table(2, 'products')), 1),
-((SELECT get_id_from_table(0, 'products')), 2);
-
---('SP58898556', 3),
---('BB98456638', 4),
---('TT85471169', 1),
---('RR78954726', 2);
+insert into checks(vendor_code, quantity) values
+('SP58898556', 3),
+('BB98456638', 4),
+('TT85471169', 1),
+('RR78954726', 2);
 
 
 -- orders
 insert into orders(client_id, check_id, order_date) values
 ((SELECT get_id_from_table(0, 'clients')),
- (SELECT get_id_from_table(0, 'products')),
+ (SELECT get_id_from_table(0, 'checks')),
   NOW()::timestamp);
 
 insert into orders(client_id, check_id, order_date) values

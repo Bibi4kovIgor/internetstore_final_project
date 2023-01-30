@@ -25,20 +25,20 @@ public class SuppliersEntity {
     @Column(name = "email")
     @NonNull private String email;
 
-    @OneToOne(cascade = CascadeType.ALL,
-            orphanRemoval = true,
+    @OneToOne(orphanRemoval = true,
             fetch = FetchType.LAZY)
     @JoinColumn(name = "license_tax_registry")
-    private LicensesEntity licenseTaxRegistry;
+    @NonNull private LicensesEntity licenseTaxRegistry;
 
     /**
      * This field is not mapped in the Database.
      * It is needed just for supporting bidirectional
      * relationships in JPA for this case
      * */
-    @OneToMany(cascade = CascadeType.ALL,
+    @OneToMany(fetch = FetchType.EAGER,
+               cascade = CascadeType.ALL,
                orphanRemoval = true,
                mappedBy = "supplier")
     @Column(name = "product")
-    @NonNull private Set<ProductsEntity> products;
+    private Set<ProductsEntity> products;
 }

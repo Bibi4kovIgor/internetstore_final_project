@@ -1,9 +1,8 @@
 package edu.internetstore.internetstore.controller;
 
-import edu.internetstore.internetstore.dto.ChecksDto;
-import edu.internetstore.internetstore.dto.OrdersDto;
-import edu.internetstore.internetstore.dto.ProductsDto;
+import edu.internetstore.internetstore.dto.*;
 import edu.internetstore.internetstore.service.*;
+import edu.internetstore.internetstore.util.Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,7 +63,11 @@ public class MainController {
     @GetMapping("/products")
     public String getAllProducts(@ModelAttribute("model") ModelMap model) {
         List<ProductsDto> products = productsService.getAllData();
+        List<SuppliersDto> suppliers = suppliersService.getAllData();
+        List<CategoriesDto> categories = categoriesService.getAllData();
         model.addAttribute("products", products);
+        model.addAttribute("suppliers", suppliers);
+        model.addAttribute("categories", categories);
         return "products";
     }
 
@@ -91,12 +94,15 @@ public class MainController {
             @RequestParam(name = "category_id") String categoryId,
             @RequestParam(name = "supplier_id") String supplierId) {
 
+        Set<CategoriesDto> categoriesDto = Utils.categoryStringToCategorySet(
+                categoriesService.getDataById(categoryId));
+        SuppliersDto supplierDto = suppliersService.getDataById(supplierId);
         ProductsDto product  = ProductsDto.builder()
                 .name(name)
                 .price(new BigDecimal(price))
                 .vendorCode(vendorCode)
-                .categories(Set.of(categoriesService.getDataById(categoryId)))
-                .supplier(suppliersService.getDataById(supplierId))
+                .categories(categoriesDto)
+                .supplier(supplierDto)
                 .build();
         productsService.insertData(product);
             model.addAttribute("products", productsService.getAllData());

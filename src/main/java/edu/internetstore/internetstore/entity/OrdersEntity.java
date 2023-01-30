@@ -15,12 +15,12 @@ import java.time.Instant;
 public class OrdersEntity {
 
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private ClientsEntity clientId;
 
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "check_id", referencedColumnName = "id")
     private ChecksEntity checkId;
 

@@ -6,7 +6,7 @@
         <div id="content">
             <table class="datatable">
                 <tr>
-                    <th>client name</th> <th>product</th> <th>check</th> <th>Date</th>
+                    <th>client name</th> <th>product</th> <th>quantity</th> <th>Date</th>
                 </tr>
                 <#list model["orders"] as orders>
                     <tr>

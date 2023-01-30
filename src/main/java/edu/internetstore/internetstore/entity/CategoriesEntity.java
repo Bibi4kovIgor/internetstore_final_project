@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "categories")
-public class CategoriesEntity { // interprets to category_entity
+public class CategoriesEntity implements Serializable { // interprets to category_entity
     @Id             // Unique, Primary Key, Not Null
     @GeneratedValue // SERIES -> auto generation of key
     @UuidGenerator
@@ -23,10 +24,10 @@ public class CategoriesEntity { // interprets to category_entity
     @Column(name = "name")
     @NonNull private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "categories_products",
-               joinColumns = @JoinColumn(name = "product_id"),          // relation owner
-               inverseJoinColumns = @JoinColumn(name = "category_id"))  // relation that "mappedBy"
+               joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private Set<ProductsEntity> products = new HashSet<>();
 
 

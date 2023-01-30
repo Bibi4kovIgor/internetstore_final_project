@@ -6,6 +6,7 @@ import edu.internetstore.internetstore.repository.ProductsRepository;
 import edu.internetstore.internetstore.util.DtoToEntity;
 import edu.internetstore.internetstore.util.EntityToDto;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.Transient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +32,12 @@ public class ProductsService implements InternetStoreService<ProductsDto> {
     }
 
     @Override
+    @Transient
     public void insertData(ProductsDto element) {
-        ProductsEntity productsEntity = DtoToEntity.productDtoToEntity(element);
-        productsRepository.save(productsEntity);
+        ProductsEntity productsEntity = productsRepository.save(
+                DtoToEntity.productDtoToEntity(element));
+
+
     }
 
     @Override

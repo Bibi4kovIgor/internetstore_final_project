@@ -12,6 +12,7 @@
 	<artifactId>internetstore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>internetstore</name>
+	<packaging>jar</packaging>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
@@ -57,12 +58,14 @@
 	</dependencies>
 
 	<build>
+		<finalName>application</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${parent.version}</version>
+				<version>${project.parent.version}</version>
 				<configuration>
+					<outputDirectory>${project.basedir}/container/dockerfiles</outputDirectory>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>

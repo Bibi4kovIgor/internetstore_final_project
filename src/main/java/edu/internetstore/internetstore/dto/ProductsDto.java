@@ -23,7 +23,7 @@ public class ProductsDto {
 
     @NonNull private BigDecimal price;
 
-    @NonNull private Set<CategoriesDto> categories;
+    private Set<CategoriesDto> categories;
 
     @NonNull private SuppliersDto supplier;
 }

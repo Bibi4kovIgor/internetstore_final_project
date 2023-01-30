@@ -3,8 +3,8 @@ package edu.internetstore.internetstore.util;
 import edu.internetstore.internetstore.dto.*;
 import edu.internetstore.internetstore.entity.*;
 
-import java.math.BigDecimal;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class EntityToDto {
     public static ProductsDto productEntityToDto(ProductsEntity productsEntity) {
@@ -20,6 +20,12 @@ public class EntityToDto {
                         .collect(Collectors.toSet()))
                 .supplier(suppliersEntityToDto(productsEntity.getSupplier()))
                 .build();
+    }
+
+    private static String getCategoriesList(ProductsEntity productsEntity) {
+        return productsEntity.getCategories().stream()
+                .map(CategoriesEntity::getName)
+                .collect(Collectors.joining(", "));
     }
 
     public static CategoriesDto categoryEntityToDto(CategoriesEntity categoriesEntity) {

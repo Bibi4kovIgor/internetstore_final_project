@@ -18,7 +18,9 @@ public class SuppliersService implements InternetStoreService<SuppliersDto> {
 
     @Override
     public List<SuppliersDto> getAllData() {
-        return null;
+        return suppliersRepository.findAll().stream()
+                .map(EntityToDto::suppliersEntityToDto)
+                .toList();
     }
 
     @Override
